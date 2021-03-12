@@ -68,6 +68,18 @@ public class Money implements Comparable{
         return true;
     }
 
+    public Money subtract(Money other){
+        return new Money(this.amount.subtract(other.getAmount()), currency);
+    }
+
+    public Money add(Money other){
+        return new Money(this.amount.add(other.getAmount()), currency);
+    }
+
+    public Money multiply(BigDecimal value){
+        return new Money(amount.multiply(value), currency);
+    }
+
     @Override
     public int hashCode(){
         final int prime = 31;

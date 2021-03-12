@@ -35,16 +35,14 @@ public class OfferItem {
             String productType, int quantity, BigDecimal discount, String discountCause) {
         this.product = new Product(productId, productName, new Money(productPrice), productSnapshotDate, productType);
 
-
         this.quantity = quantity;
-        this.discount = new Discount(discountCause, new Money(discount));
 
-        BigDecimal discountValue = new BigDecimal(0);
+        this.discount = new Discount(null, new Money(new BigDecimal(0.0)));
         if (discount != null) {
-            discountValue = discountValue.subtract(discount);
+            this.discount = new Discount(discountCause, new Money(new BigDecimal(0.0).subtract(discount)));
         }
 
-        this.totalCost = new Money(productPrice.multiply(new BigDecimal(quantity)).subtract(discountValue));
+        this.totalCost = product.getPrice().multiply(new BigDecimal(quantity)).subtract(this.discount.getValue());
     }
 
     public String getProductId() {
